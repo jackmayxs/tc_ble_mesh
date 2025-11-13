@@ -271,7 +271,16 @@ typedef void(^resultHandle)(NSError  * _Nullable error);
                         dispatch_semaphore_signal(semaphore);
                     }];
                 } else {
-                    SigAddConfigModel *config = [[SigAddConfigModel alloc] initWithCBPeripheral:peripheral networkKey:key netkeyIndex:SigDataSource.share.curNetkeyModel.index appKey:SigDataSource.share.curAppKey appkeyIndex:SigDataSource.share.curAppkeyModel.index staticOOBData:staticOOBData keyBindType:type.integerValue productID:0 cpsData:nil];
+                    SigAddConfigModel *config = [[SigAddConfigModel alloc]
+                                                 initWithCBPeripheral:peripheral
+                                                 networkKey:key
+                                                 netkeyIndex:SigDataSource.share.curNetkeyModel.index
+                                                 appKey:SigDataSource.share.curAppKey
+                                                 appkeyIndex:SigDataSource.share.curAppkeyModel.index
+                                                 staticOOBData:staticOOBData
+                                                 keyBindType:type.integerValue
+                                                 productID:0
+                                                 cpsData:nil];
                     [config setStartConnectBlock:^(NSString * _Nonnull identify) {
                         model.state = AddDeviceModelStateConnecting;
                         [weakSelf.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
