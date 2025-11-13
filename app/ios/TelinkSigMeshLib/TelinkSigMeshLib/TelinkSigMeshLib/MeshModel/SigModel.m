@@ -698,9 +698,22 @@
                     memcpy(&tem16, byte, 2);
                     _CID = tem16;
                 }
-                if (allData.length >= 8) {
+                if (allData.length >= 6) {
                     _macAddress = [LibTools convertDataToHexStr:[LibTools turnOverData:[allData subdataWithRange:NSMakeRange(0, 6)]]];
                 }
+                if (allData.length >= 8) {
+                    _type = [LibTools convertDataToHexStr:[LibTools turnOverData:[allData subdataWithRange:NSMakeRange(6, 2)]]];
+                    TelinkLogInfo(@"_type = %@", _type)
+                }
+                if (allData.length >= 17) {
+                    _firmwareVersion = [LibTools convertDataToHexStr:[LibTools turnOverData:[allData subdataWithRange:NSMakeRange(14, 3)]]];
+                    TelinkLogInfo(@"固件版本信息：_firmwareVersion = %@", _firmwareVersion)
+                }
+                if (allData.length >= 18) {
+                    _isPA = [LibTools convertDataToHexStr:[LibTools turnOverData:[allData subdataWithRange:NSMakeRange(17, 1)]]];
+                    TelinkLogInfo(@"_isPA = %@", _isPA)
+                }
+                /// 在这里处理数据
                 if (allData.length >= 10) {
                     memcpy(&tem16, byte+8, 2);
                     _address = tem16;
@@ -3794,6 +3807,15 @@
         if (self.macAddress) {
             dict[@"macAddress"] = self.macAddress;
         }
+        if (self.firmwareVersion) {
+            dict[@"firmwareVersion"] = self.firmwareVersion;
+        }
+        if (self.isPA) {
+            dict[@"isPA"] = self.isPA;
+        }
+        if (self.type) {
+            dict[@"type"] = self.type;
+        }
     }
     if (_features) {
         dict[@"features"] = [_features getDictionaryOfSigFeatureModel];
@@ -3954,6 +3976,15 @@
     NSArray *allKeys = dictionary.allKeys;
     if ([allKeys containsObject:@"macAddress"]) {
         _macAddress = dictionary[@"macAddress"];
+    }
+    if ([allKeys containsObject:@"firmwareVersion"]) {
+        _firmwareVersion = dictionary[@"firmwareVersion"];
+    }
+    if ([allKeys containsObject:@"type"]) {
+        _type = dictionary[@"type"];
+    }
+    if ([allKeys containsObject:@"isPA"]) {
+        _isPA = dictionary[@"isPA"];
     }
     if ([allKeys containsObject:@"features"]) {
         SigNodeFeatures *features = [[SigNodeFeatures alloc] init];

@@ -384,6 +384,12 @@ typedef void(^openChannelResultCallback)(CBPeripheral *peripheral,CBL2CAPChannel
 @property (nonatomic, strong) NSData *advertisementDataServiceData;
 /// MacAddress is subData in advertisement data for key `CBAdvertisementDataManufacturerDataKey`, MacAddress is an obsolete attribute.
 @property (nonatomic, strong) NSString *macAddress;
+/// 新增： 固件版本十六进制表示 三个字节 type
+@property (nonatomic, strong) NSString *firmwareVersion;
+/// 新增： 特殊标识符 两个字节
+@property (nonatomic, strong) NSString *type;
+/// 新增： PA信息
+@property (nonatomic, strong) NSString *isPA;
 /// company ID, default is 0x0211=529.
 @property (nonatomic, assign) UInt16 CID;
 /// product ID
@@ -1884,6 +1890,15 @@ static Byte LPNByte[] = {(Byte) 0x11, (Byte) 0x02, (Byte) 0x01, (Byte) 0x02, (By
 @property (nonatomic, strong, nullable) SigHeartbeatSubModel *heartbeatSub;
 
 @property (nonatomic, copy, nullable) NSString *macAddress;//new add the mac to json, get mac from scanResponse's Manufacturer Data.
+
+/// 新增： 固件版本十六进制表示 三个字节 type
+@property (nonatomic, copy, nullable) NSString *firmwareVersion;
+
+/// 新增： 特殊标识符 两个字节
+@property (nonatomic, copy, nullable) NSString *type;
+
+/// 新增： PA信息
+@property (nonatomic, copy, nullable) NSString *isPA;
 
 //暂时添加到json数据中
 @property (nonatomic,strong) NSMutableArray <SchedulerModel *>*schedulerList;
