@@ -4072,8 +4072,8 @@
     }];
     [[TPeripheralManager share] initSDK];
 
-//    ///默认为NO，连接速度更加快。设置为YES，表示扫描到的设备必须包含MacAddress，有些客户在添加流程需要通过MacAddress获取三元组信息，需要使用YES。
-//    [SigBluetooth.share setWaitScanRseponseEnable:YES];
+    ///默认为NO，连接速度更加快。设置为YES，表示扫描到的设备必须包含MacAddress，有些客户在添加流程需要通过MacAddress获取三元组信息，需要使用YES。
+    [SigBluetooth.share setWaitScanRseponseEnable: YES];
 }
 
 /**
@@ -4345,6 +4345,7 @@
                                 }
                                 if (responseMessage.status == SigConfigMessageStatus_success && isSuccess == NO) {
                                     isSuccess = YES;
+                                    TelinkLogInfo(@"订阅组号成功：success code=%d",responseMessage.status)
                                 } else if (isFail == NO) {
                                     isFail = YES;
                                     TelinkLogError(@"订阅组号失败：error code=%d",responseMessage.status);
@@ -4374,9 +4375,10 @@
                                 }
                                 if (responseMessage.status == SigConfigMessageStatus_success && isSuccess == NO) {
                                     isSuccess = YES;
+                                    TelinkLogInfo(@"取消订阅组号成功：success code=%d",responseMessage.status)
                                 } else if (isFail == NO) {
                                     isFail = YES;
-                                    TelinkLogError(@"订阅组号失败：error code=%d",responseMessage.status);
+                                    TelinkLogError(@"取消订阅组号失败：error code=%d",responseMessage.status);
                                     if (responseMessage.status == SigConfigMessageStatus_insufficientResources) {
                                         //资源不足，设备的组号已经添加满了。
                                         managerError = [NSError errorWithDomain:@"Insufficient Resources!" code:-1 userInfo:nil];

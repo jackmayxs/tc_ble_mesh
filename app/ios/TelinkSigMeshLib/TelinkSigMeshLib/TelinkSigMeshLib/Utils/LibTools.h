@@ -42,6 +42,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSString *)convertDataToHexStr:(NSData *)data;
 
+/*
+ 十六进制字符串转为十进制NSNumber
+
+ @return 类型的十进制NSNumber
+ */
++ (NSNumber *)numberFromHexString:(NSString *)hexString;
+
 ///NSData字节翻转
 + (NSData *)turnOverData:(NSData *)data;
 

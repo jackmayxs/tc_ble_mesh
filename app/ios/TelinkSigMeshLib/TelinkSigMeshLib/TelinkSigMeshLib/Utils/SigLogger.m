@@ -95,7 +95,7 @@
             [weakSelf checkSDKLogFileSize];
         }];
         [self checkSDKLogFileSize];
-        [self enableLogger];
+//        [self enableLogger];
     } else {
         //OFF状态则删除TelinkSDKDebugLogData和加密的TelinkSDKMeshJsonData。
         NSFileManager *manager = [NSFileManager defaultManager];

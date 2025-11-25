@@ -209,6 +209,8 @@
     __weak typeof(self) weakSelf = self;
     UInt16 productId = self.productIds.count > 1 ? 0xFFFF : self.productIds.firstObject.intValue;
     [self fastProvisionGetAddressWithProductId:productId successCallback:^(UInt16 source, UInt16 destination, SigMeshMessage * _Nonnull responseMessage) {
+        
+        TelinkLogInfo(@"source=0x%x,destination=0x%x,opCode=0x%x,parameters=%@",source,destination,responseMessage.opCode,[LibTools convertDataToHexStr:responseMessage.parameters]);
         if (((responseMessage.opCode >> 16) & 0xFF) == SigOpCode_VendorID_MeshAddressGetStatus) {
             SigFastProvisionModel *model = [[SigFastProvisionModel alloc] init];
             if (responseMessage.parameters.length >= 8) {
@@ -221,12 +223,16 @@
                 struct TelinkPID temPid = {};
                 temPid.value = tem;
                 temPid.MCUChipType = 0;
+                TelinkLogInfo(@"productIds== %@,temPid.value == %@",self.productIds, temPid.value);
                 if ([self.productIds containsObject:@(temPid.value)]) {
+                    TelinkLogInfo(@"\n\n==========fast provision:1到这里了\n\n");
                     [weakSelf.scanMacAddressList addObject:model];
+                    TelinkLogInfo(@"\n\n==========fast provision:2到这里了\n\n");
                     if (weakSelf.scanResponseBlock) {
                         weakSelf.scanResponseBlock(model.deviceKey, [LibTools convertDataToHexStr:[LibTools turnOverData:model.macAddress]], 0, model.productId);
                     }
                 }
+                TelinkLogInfo(@"\n\n==========fast provision:3到这里了\n\n");
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [NSObject cancelPreviousPerformRequestsWithTarget:weakSelf selector:@selector(checkScanMacAddressList) object:nil];
                     [weakSelf performSelector:@selector(checkScanMacAddressList) withObject:nil afterDelay:2.0+0.2];
@@ -234,7 +240,9 @@
             }
         }
     } resultCallback:^(BOOL isResponseAll, NSError * _Nullable error) {
+        TelinkLogInfo(@"isResponseAll=%d,error=%@",isResponseAll,error);
     }];
+    TelinkLogInfo(@"\n\n==========fast provision:4到这里了\n\n");
     dispatch_async(dispatch_get_main_queue(), ^{
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkScanMacAddressList) object:nil];
         [self performSelector:@selector(checkScanMacAddressList) withObject:nil afterDelay:2.0+0.2];

@@ -703,15 +703,14 @@
                 }
                 if (allData.length >= 8) {
                     _type = [LibTools convertDataToHexStr:[LibTools turnOverData:[allData subdataWithRange:NSMakeRange(6, 2)]]];
-                    TelinkLogInfo(@"_type = %@", _type)
                 }
                 if (allData.length >= 17) {
-                    _firmwareVersion = [LibTools convertDataToHexStr:[LibTools turnOverData:[allData subdataWithRange:NSMakeRange(14, 3)]]];
-                    TelinkLogInfo(@"固件版本信息：_firmwareVersion = %@", _firmwareVersion)
+                    NSString *firmwareVersion = [LibTools convertDataToHexStr:[LibTools turnOverData:[allData subdataWithRange:NSMakeRange(14, 3)]]];
+                    _firmwareVersion = [LibTools numberFromHexString: firmwareVersion];
                 }
                 if (allData.length >= 18) {
-                    _isPA = [LibTools convertDataToHexStr:[LibTools turnOverData:[allData subdataWithRange:NSMakeRange(17, 1)]]];
-                    TelinkLogInfo(@"_isPA = %@", _isPA)
+                    NSString *isPA = [LibTools convertDataToHexStr:[LibTools turnOverData:[allData subdataWithRange:NSMakeRange(17, 1)]]];
+                    _isPA = [LibTools numberFromHexString: isPA];
                 }
                 /// 在这里处理数据
                 if (allData.length >= 10) {
@@ -4520,7 +4519,8 @@
                         sigModelIDModel.publish.credentials = 0;
                         sigModelIDModel.publish.ttl = 0xff;
                         //json数据中，period为publish周期的毫秒数据，默认20秒
-                        sigModelIDModel.publish.period.numberOfSteps = SigMeshLib.share.dataSource.defaultPublishPeriodModel.numberOfSteps;
+                        sigModelIDModel.publish.period.numberOfSteps = 0;
+//                        SigMeshLib.share.dataSource.defaultPublishPeriodModel.numberOfSteps;
                         sigModelIDModel.publish.period.resolution = SigMeshLib.share.dataSource.defaultPublishPeriodModel.resolution;
                         sigModelIDModel.publish.retransmit = retransmit;
                         sigModelIDModel.publish.address = [NSString stringWithFormat:@"%04lX",(long)kMeshAddress_allNodes];

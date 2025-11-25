@@ -51,6 +51,9 @@ NSString * const kOTA_CharacteristicsID = @"00010203-0405-0607-0809-0A0B0C0D2B12
 NSString * const kMeshOTA_CharacteristicsID = @"00010203-0405-0607-0809-0A0B0C0D7FDF";
 NSString * const kFirmwareRevisionCharacteristicsID = @"2A26";
 
+/// MCU固件升级
+NSString * const MCUCharacteristicsID = @"FFF3";
+
 //存储数据的key
 //mesh
 NSString * const kScanList_key = @"scanList_key";

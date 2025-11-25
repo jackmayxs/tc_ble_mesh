@@ -85,6 +85,25 @@
     return string;
 }
 
+/// 十六进制字符串转为十进制NSNumber
+/// @param hexString 十六进制字符串
++ (NSNumber *)numberFromHexString:(NSString *)hexString {
+    if (![hexString isKindOfClass:[NSString class]] || hexString.length == 0) {
+        return @(0);
+    }
+    
+    NSScanner *scanner = [NSScanner scannerWithString:hexString];
+    unsigned long long result = 0;
+    
+    // scanHexLongLong 会自动处理 0x 前缀和大小写
+    if ([scanner scanHexLongLong:&result]) {
+        return @(result);
+    } else {
+        return @(0);
+    }
+}
+
+
 ///NSData字节翻转
 + (NSData *)turnOverData:(NSData *)data {
     // 预先计算需要的内存大小

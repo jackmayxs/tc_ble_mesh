@@ -44,6 +44,7 @@
         }
     } else {
         if ([LibTools uint16From16String:model.cid] == kCompanyID) {
+            NSLog(@"PID: %@", model.pid);
             tempType = [NSString stringWithFormat:@"Pid-%02X",[LibTools uint16From16String:model.pid]];
         }else{
             tempType = [NSString stringWithFormat:@"Cid-%04X",[LibTools uint16From16String:model.cid]];

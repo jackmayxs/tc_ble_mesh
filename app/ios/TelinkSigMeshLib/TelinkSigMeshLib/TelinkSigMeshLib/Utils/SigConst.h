@@ -64,6 +64,8 @@ UIKIT_EXTERN NSString * const kOTA_CharacteristicsID;
 UIKIT_EXTERN NSString * const kMeshOTA_CharacteristicsID;
 UIKIT_EXTERN NSString * const kFirmwareRevisionCharacteristicsID;
 
+/// MCU固件升级
+UIKIT_EXTERN NSString * const MCUCharacteristicsID;
 
 //存储数据的key
 //mesh
